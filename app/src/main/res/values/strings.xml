@@ -1,0 +1,94 @@
+<resources>
+    <string name="app_name">Emerholcim</string>
+    <string name="Bienvenido">Bienvenido</string>
+    <string name="title_activity_maps">Map</string>
+
+    //textos
+
+    <string name="iniciotext1">Atención a Emergencias Médicas</string>
+    <string name="iniciotext2">Plan de Repuesta</string>
+    <string name="Entrar">Entrar</string>
+    <string name="Iniciar">Iniciar Sesión</string>
+    <string name="Olvido">Olvido su contraseña ?</string>
+    <string name="Email">Email:</string>
+    <string name="Contraseña">Contraseña:</string>
+    <string name="Ingresar">Ingresar</string>
+    <string name="Perfil_Brigadista">Perfil Brigadista</string>
+    <string name="Nombre">Nombre</string>
+    <string name="Reportar">Reportar accidente</string>
+    <string name="leve">Accidente Leve</string>
+    <string name="grave">Accidente Grave</string>
+    <string name="reguladas">Accidente Regular</string>
+    <string name="toxicas">Accidente Toxicológicas</string>
+    <string name="quimicas">Accidente Quimícos</string>
+    <string name="Emergenciar">EMERGENCIA REGULAR</string>
+    <string name="TeleEmer">TELEFONOS DE EMERGENCIA</string>
+    <string name="Grave">GRAVE</string>
+    <string name="Emergenciato">EMERGENCIA TOXICOLÒGICA</string>
+    <string name="Emergenciaqu">EMERGENCIA QUIMICA</string>
+    <string name="planta">Planta</string>
+    <string name="tipo_brigadista">Tipo Brigadista</string>
+    <string name="todo">TODO</string>
+    <string name="Telefonosemer">TELEFONOS DE EMERGENCIAS</string>
+    <string name="todo1">TODO</string>
+    <string name="title_activity_telefonos">TelefonosActivity</string>
+    <string name="tab_text_1">Interno</string>
+    <string name="tab_text_2">Externo</string>
+    <string name="tab_text_3">Brigadistas</string>
+    <string name="tab_text_4">Emergencia</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="four">cuatro</string>
+    <string name="three">Tres</string>
+    <string name="two">Dos</string>
+    <string name="one">Uno</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_scrollable_tabs">Scrollable Tabs</string>
+    <string name="username">Username</string>
+    <string name="email">email</string>
+    <string name="password">Password</string>
+    <string name="organizacion">Organizacion</string>
+    <string name="registro">Registro</string>
+    <string name="label_table_1">Bello</string>
+    <string name="label_table_2">Cartagena</string>
+    <string name="label_table_3">Floridablanca</string>
+    <string name="label_table_4">Palmira</string>
+    <string name="label_table_5">Puente aranda</string>
+    <string name="label_table_6">Teleport</string>
+    <string name="label_table_7">Chia</string>
+    <string name="label_table_8">Buga</string>
+    <string name="label_table_9">Ricaurte</string>
+    <string name="label_table_10">Tunja</string>
+    <string name="label_table_11">Nobsa</string>
+    <string name="nombre">Nombre</string>
+    <string name="apellidos">Apellidos</string>
+    <string name="emaildos">Email</string>
+    <string name="registrar">REGISTRAR</string>
+    <string name="title_activity_mapa">Map</string>
+    <string name="title_activity_mapahospital">Map</string>
+    <string name="GPSAlertDialogTitle">Titulo del gps</string>
+    <string name="GPSAlertDialogMessage">Mensaje</string>
+    <string name="label_cancel">Cancelar</string>
+    <string name="fecha">Fecha</string>
+    <string name="nombre_paciente">nombre paciente</string>
+    <string name="inicio">Inicio</string>
+    <string name="queja_principal">Queja Principal</string>
+    <string name="nombre_del_jefe_de_brigada">Nombre del Jefe de brigada</string>
+    <string name="si">si</string>
+    <string name="destino_del_paciente">Destino del Paciente</string>
+    <string name="ubicacion_del_accidente">Ubicacion del accidente</string>
+    <string name="tipo_de_evento">Tipo de evento</string>
+    <string name="subsecuente"># subsecuente</string>
+    <string name="elaboro_la_cedula_de_atencion_inicial">Elaboro la cedula de atencion inicial</string>
+    <string name="manejo_especial">Manejo Especial</string>
+    <string name="genero">Genero</string>
+    <string name="edad">Edad</string>
+
+</resources>
+
+
+
+
+

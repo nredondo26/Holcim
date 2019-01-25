@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorAccenta">#FF4081</color>
+    <color name="gris">#48484a</color>
+    <color name="rojo">#fa3232</color>
+    <color name="blanco">#fcffff</color>
+    <color name="grislogo">#656565</color>
+    <color name="grislogin">#676e76</color>
+    <color name="griscaja">#868b91</color>
+    <color name="amarrilloboton">#fff001</color>
+    <color name="azulboton">#4a5ee3</color>
+    <color name="naranjaboton">#ffad01</color>
+    <color name="berdeboton">#28ea00</color>
+    <color name="emergenciaboton">#d80027</color>
+    <color name="colornegro">#121111</color>
+    <color name="grislista">#eeeff2</color>
+    <color name="griscaja1">#b4bdc7</color>
+    <color name="barraazul">#5cb6d9</color>
+    <color name="colorPrimary">#125688</color>
+    <color name="colorPrimaryDark">#125688</color>
+    <color name="textColorPrimary">#FFFFFF</color>
+    <color name="windowBackground">#FFFFFF</color>
+    <color name="navigationBarColor">#000000</color>
+    <color name="colorAccent">#c8e8ff</color>
+    <color name="colorbitacora">#e6f2ce</color>
+
+</resources>
+
+

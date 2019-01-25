@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grislogin"
+    tools:context=".proyect.Activities.Paciente">
+
+    <EditText
+        android:id="@+id/editnombre"
+        android:layout_width="270dp"
+        android:layout_height="45dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/caja"
+        android:ems="10"
+        android:hint="Nombres"
+        android:inputType="textPersonName"
+        android:padding="5dp"
+        android:textColor="@color/blanco"
+        android:textColorHint="@color/blanco"
+        android:textColorLink="@color/blanco"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editarea"
+        android:layout_width="270dp"
+        android:layout_height="45dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/caja"
+        android:ems="10"
+        android:hint="Area de Trabajo"
+        android:inputType="textPersonName"
+        android:padding="5dp"
+        android:textColor="@color/blanco"
+        android:textColorHint="@color/blanco"
+        android:textColorLink="@color/blanco"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editnombre"
+        tools:ignore="MissingConstraints" />
+
+
+    <EditText
+        android:id="@+id/editjefe"
+        android:layout_width="270dp"
+        android:layout_height="45dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/caja"
+        android:ems="10"
+        android:hint="Jefe Inmediato"
+        android:inputType="textEmailAddress"
+        android:padding="5dp"
+        android:textColor="@color/blanco"
+        android:textColorHint="@color/blanco"
+        android:textColorLink="@color/blanco"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editarea"
+        tools:ignore="MissingConstraints" />
+
+
+    <EditText
+        android:id="@+id/editanotacion"
+        android:layout_width="270dp"
+        android:layout_height="131dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/caja"
+        android:ems="10"
+        android:hint="Anotaciones"
+        android:inputType="textMultiLine"
+        android:padding="5dp"
+        android:textColor="@color/blanco"
+        android:textColorHint="@color/blanco"
+        android:textColorLink="@color/blanco"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editjefe"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/benviar"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/boton_normal"
+        android:text="ENVIAR"
+        android:textColor="@color/blanco"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnImagen"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/btnImagen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="148dp"
+        android:layout_marginStart="148dp"
+        android:layout_marginTop="12dp"
+        android:text="Seleccionar imagen "
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editanotacion" />
+
+
+</android.support.constraint.ConstraintLayout>

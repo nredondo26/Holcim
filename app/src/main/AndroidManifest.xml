@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="nredondo26.com.holcim">
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:supportsRtl="true"
+        tools:replace="android:roundIcon"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".proyect.Activities.MainActivity"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".proyect.Activities.LoginActivity"
+            android:label="@string/Iniciar" />
+        <activity
+            android:name=".proyect.Activities.PerfilActivity"
+            android:label="@string/Perfil_Brigadista" />
+        <activity android:name=".proyect.Activities.RegistroActivity" />
+        <activity android:name=".proyect.Activities.NumerosActivity" />
+        <activity android:name=".proyect.Activities.EditarUser" />
+        <activity
+            android:name=".proyect.Activities.Leve"
+            android:label="@string/leve"
+            android:theme="@style/AppThemeamarillo" />
+        <activity
+            android:name=".proyect.Activities.Grave"
+            android:label="@string/grave"
+            android:theme="@style/AppThemerojo" />
+        <activity
+            android:name=".proyect.Activities.Reguladas"
+            android:label="@string/reguladas"
+            android:theme="@style/AppThemeazul" />
+        <activity
+            android:name=".proyect.Activities.Sustancias_quimicas"
+            android:label="@string/quimicas"
+            android:theme="@style/AppThemeverde" />
+        <activity
+            android:name=".proyect.Activities.Toxicas"
+            android:label="@string/toxicas"
+            android:theme="@style/AppThemenaranja" />
+        <activity android:name=".proyect.Activities.Paciente" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.leve.levecero"
+            android:theme="@style/AppThemeamarillo" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.leve.levecerop"
+            android:theme="@style/AppThemeamarillo" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.leve.leveuno"
+            android:theme="@style/AppThemeamarillo" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.leve.leveunop"
+            android:theme="@style/AppThemeamarillo" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.leve.levedos"
+            android:theme="@style/AppThemeamarillo" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.leve.levedosp"
+            android:theme="@style/AppThemeamarillo" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.leve.levetres"
+            android:theme="@style/AppThemeamarillo" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.leve.levetresp"
+            android:theme="@style/AppThemeamarillo" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.leve.levecuatro"
+            android:theme="@style/AppThemeamarillo" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.leve.levecuatrop"
+            android:theme="@style/AppThemeamarillo" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.quimica.quimicocero"
+            android:theme="@style/AppThemeverde" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.quimica.quimicocerop"
+            android:theme="@style/AppThemeverde" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.toxica.toxicacero"
+            android:theme="@style/AppThemenaranja" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.toxica.toxicacerop"
+            android:theme="@style/AppThemenaranja" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.toxica.toxicauno"
+            android:theme="@style/AppThemenaranja" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.toxica.toxicaunop"
+            android:theme="@style/AppThemenaranja" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.toxica.toxicados"
+            android:theme="@style/AppThemenaranja" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.toxica.toxicadosp"
+            android:theme="@style/AppThemenaranja" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.regulada.reguladacero"
+            android:theme="@style/AppThemeazul" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.regulada.reguladacerop"
+            android:theme="@style/AppThemeazul" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.regulada.reguladauno"
+            android:theme="@style/AppThemeazul" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.regulada.reguladaunop"
+            android:theme="@style/AppThemeazul" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.regulada.reguladados"
+            android:theme="@style/AppThemeazul" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.regulada.reguladadosp"
+            android:theme="@style/AppThemeazul" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.regulada.reguladatres"
+            android:theme="@style/AppThemeazul" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.regulada.reguladatresp"
+            android:theme="@style/AppThemeazul" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.regulada.reguladacuatro"
+            android:theme="@style/AppThemeazul" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.regulada.reguladacuatrop"
+            android:theme="@style/AppThemeazul" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.regulada.reguladacinco"
+            android:theme="@style/AppThemeazul" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.regulada.reguladacincop"
+            android:theme="@style/AppThemeazul" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.regulada.reguladaseis"
+            android:theme="@style/AppThemeazul" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.regulada.reguladaseisp"
+            android:theme="@style/AppThemeazul" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.regulada.reguladasiete"
+            android:theme="@style/AppThemeazul" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.regulada.reguladasietep"
+            android:theme="@style/AppThemeazul" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.grave.gravecero"
+            android:theme="@style/AppThemerojo" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.grave.gravecerop"
+            android:theme="@style/AppThemerojo" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.grave.graveuno"
+            android:theme="@style/AppThemerojo" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.grave.graveunop"
+            android:theme="@style/AppThemerojo" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.grave.gravedos"
+            android:theme="@style/AppThemerojo" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.grave.gravedosp"
+            android:theme="@style/AppThemerojo" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.grave.gravetres"
+            android:theme="@style/AppThemerojo" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.grave.gravetresp"
+            android:theme="@style/AppThemerojo" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.grave.gravecuatro"
+            android:theme="@style/AppThemerojo" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.grave.gravecuatrop"
+            android:theme="@style/AppThemerojo" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.grave.gravecinco"
+            android:theme="@style/AppThemerojo" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.grave.gravecincop"
+            android:theme="@style/AppThemerojo" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.grave.graveseis"
+            android:theme="@style/AppThemerojo" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.grave.graveseisp"
+            android:theme="@style/AppThemerojo" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.grave.gravesiete"
+            android:theme="@style/AppThemerojo" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.grave.gravesietep"
+            android:theme="@style/AppThemerojo" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.grave.graveocho"
+            android:theme="@style/AppThemerojo" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.grave.graveochop"
+            android:theme="@style/AppThemerojo" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.grave.gravenueve"
+            android:theme="@style/AppThemerojo" />
+        <activity
+            android:name=".proyect.Activities.Procedimientos.grave.gravenuevep"
+            android:theme="@style/AppThemerojo" />
+        <activity
+            android:name=".proyect.Activities.EditarActivity"
+            android:label="Editar" />
+        <activity
+            android:name=".proyect.Activities.Cambiar_imagen_Activity"
+            android:label="Imagen de Perfil" />
+        <activity
+            android:name=".proyect.Activities.Traslado"
+            android:label="Traslado" />
+
+
+
+        <activity android:name=".proyect.Activities.LlamarNueveonce" />
+        <activity android:name=".proyect.Activities.BitacoraActivity" android:label="Bitacora"></activity>
+    </application>
+
+</manifest>
