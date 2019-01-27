@@ -102,23 +102,26 @@ public class RegistroActivity extends AppCompatActivity {
 
         AppCompatSpinner spinner_order_type = findViewById(R.id.spinner_order_type);
         String[] letra = {"ZONA",
-                "Chia",
-                "Nobsa",
-                "Puente aranda",
+               // "Pipiral",
+                //"Cartagena",
                 "Bello",
-                "Floridablanca",
-                "Palmira",
-                "Pipiral",
-                "Cartagena",
-                "Teleport",
                 "Buga",
+                "Cali Sur",
+                "Cemento",
+                "Chia",
+                "Floridablanca",
+                "Nobsa",
+                "Palmira",
+                "Puente Aranda",
                 "Ricaurte",
-                "Tunja"
+                "Teleport",
+                "Tunja",
+                "Villavicencio"
         };
         spinner_order_type.setAdapter(new ArrayAdapter<String>(getApplicationContext(), R.layout.layout_spinner_item, letra));
 
         AppCompatSpinner spinner_order_type2 = findViewById(R.id.spinner_order_type2);
-        String[] letra1 = {"PUESTO",
+        String[] letra1 = {"Cargos",
                 "Jefe de Brigada",
                 "Jefe de Brigada",
                 "Jefe de Brigada Zona I",
@@ -150,7 +153,9 @@ public class RegistroActivity extends AppCompatActivity {
                 "Brigadista de Evacuación",
                 "Médico Responsable",
                 "rescate",
-                "Otros"
+                "Otros",
+                "Visitante",
+                "Trabajador no Holcim"
         };
         spinner_order_type2.setAdapter(new ArrayAdapter<String>(getApplicationContext(), R.layout.layout_spinner_item, letra1));
 

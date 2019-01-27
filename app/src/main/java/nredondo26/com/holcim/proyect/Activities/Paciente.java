@@ -65,7 +65,6 @@ public class Paciente extends AppCompatActivity {
         listaImagenes = new ArrayList<>();
         btnPhoto= findViewById(R.id.btnImagen);
 
-
         btnPhoto.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent mIntent = new Intent(getApplicationContext(), PickImageActivity.class);
@@ -109,7 +108,7 @@ public class Paciente extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream);
                     String encodedImage = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
 
                     listaImagenes.add(encodedImage);

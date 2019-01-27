@@ -13,8 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.BreakIterator;
 import java.util.List;
-
 import nredondo26.com.holcim.R;
 import nredondo26.com.holcim.proyect.Model.Contact;
 
@@ -24,12 +24,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private Context mContext;
     private List<Contact> mData;
 
-
     public RecyclerViewAdapter(Context mContext, List<Contact> mData) {
         this.mContext = mContext;
         this.mData = mData;
     }
-
 
     @NonNull
     @Override
@@ -60,6 +58,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.tv_nombre.setText(mData.get(position).getNombre());
         holder.tv_telefono.setText(mData.get(position).getTelefono());
+
     }
 
     @Override
@@ -73,7 +72,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         private TextView tv_nombre;
         private TextView tv_telefono;
 
-
         MyViewHolder(View itemView) {
             super(itemView);
 
@@ -82,9 +80,5 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             tv_telefono = itemView.findViewById(R.id.telefono);
         }
     }
-
-
-
-
 
 }

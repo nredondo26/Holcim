@@ -2,38 +2,32 @@ package nredondo26.com.holcim.proyect.Activities;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.location.LocationProvider;
 import android.net.Uri;
-import android.provider.Settings;
-import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
 import nredondo26.com.holcim.R;
-
 
 public class Traslado extends AppCompatActivity {
 
     ConstraintLayout occidente, accidentes, mederi, kennedy, sanjuan, universitaria;
+
+    ProgressDialog progressDialog;
 
     double lat_occidente = 4.629399;
     double lon_occidente = -74.135634;
@@ -53,15 +47,15 @@ public class Traslado extends AppCompatActivity {
     double lat_universitaria = 4.647356;
     double lon_universitaria = -74.1062957;
 
-    double lactual ;
-    double lonactual;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_traslado);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        permisos();
+
+        progressDialog = new ProgressDialog(Traslado.this);
 
         occidente= findViewById(R.id.occidente);
         accidentes= findViewById(R.id.accidentes);
@@ -73,70 +67,86 @@ public class Traslado extends AppCompatActivity {
         occidente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                permisos();
-                Marcarruta(lactual,lonactual,lat_occidente,lon_occidente);
+                Marcarruta(lat_occidente,lon_occidente);
             }
         });
         accidentes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                permisos();
-                Marcarruta(lactual,lonactual,lat_accidente,lon_accidente);
+                Marcarruta(lat_accidente,lon_accidente);
             }
         });
         mederi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                permisos();
-                Marcarruta(lactual,lonactual,lat_mederi,lon_mederi);
+                Marcarruta(lat_mederi,lon_mederi);
             }
         });
         kennedy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                permisos();
-                Marcarruta(lactual,lonactual,lat_kennedy,lon_kennedy);
+                Marcarruta(lat_kennedy,lon_kennedy);
             }
         });
         sanjuan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                permisos();
-                Marcarruta(lactual,lonactual,lat_sanjuan,lon_sanjuan);
+                Marcarruta(lat_sanjuan,lon_sanjuan);
             }
         });
         universitaria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                permisos();
-                Marcarruta(lactual,lonactual,lat_universitaria,lon_universitaria);
+                Marcarruta(lat_universitaria,lon_universitaria);
             }
         });
     }
 
     public void permisos(){
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,}, 1000);
-        } else {
-            locationStart();
-        }
-    }
 
-    public void Marcarruta(double r1,double r2,double r3,double r4){
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,}, 1000);
-        } else {
-            locationStart();
-            if (r1 != 0.0 && r2 != 0.0) {
-                        Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr="+r1+","+r2+"&daddr="+r3+","+r4));
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        intent.addCategory(Intent.CATEGORY_LAUNCHER );
-                        intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
-                        startActivity(intent);
-            }else{
-                Toast.makeText(getApplicationContext(),"Intentelo de nuevo",Toast.LENGTH_LONG).show();
+        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+
+        if(permissionCheck== PackageManager.PERMISSION_DENIED){
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             }
         }
+
+    }
+
+    public void Marcarruta(final double r3, final double r4){
+
+        progressDialog.setMessage("Obteniendo ruta, espere por favor...");
+        progressDialog.show();
+
+        LocationManager locationManager = (LocationManager) Traslado.this.getSystemService(Context.LOCATION_SERVICE);
+
+        LocationListener locationListener = new LocationListener() {
+            @SuppressLint("SetTextI18n")
+            public void onLocationChanged(Location location) {
+
+                progressDialog.dismiss();
+
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr="+location.getLatitude()+","+location.getLongitude()+"&daddr="+r3+","+r4));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addCategory(Intent.CATEGORY_LAUNCHER );
+                intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+                startActivity(intent);
+
+            }
+
+            public void onStatusChanged(String provider, int status, Bundle extras) {}
+
+            public void onProviderEnabled(String provider) { Toast.makeText(getApplicationContext(),"GPS Activado",Toast.LENGTH_SHORT).show(); }
+            public void onProviderDisabled(String provider) { Toast.makeText(getApplicationContext(),"GPS Desactivado",Toast.LENGTH_SHORT).show(); }
+
+        };
+
+        int permissionCheck = ContextCompat.checkSelfPermission(Traslado.this, Manifest.permission.ACCESS_FINE_LOCATION);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 100, locationListener);
+
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -156,84 +166,4 @@ public class Traslado extends AppCompatActivity {
         }
     }
 
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == 1000) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                locationStart();
-            }
-        }
-    }
-
-    private void locationStart() {
-        LocationManager mlocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        Localizacion Local = new Localizacion();
-        Local.setTraslado(this);
-        assert mlocManager != null;
-        final boolean gpsEnabled = mlocManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        if (!gpsEnabled) {
-            Intent settingsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-            startActivity(settingsIntent);
-        }
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,}, 1000);
-            return;
-        }
-        mlocManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, Local);
-        mlocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, Local);
-    }
-
-    @SuppressLint("SetTextI18n")
-    public void setLocation(Location loc) {
-        if (loc.getLatitude() != 0.0 && loc.getLongitude() != 0.0) {
-
-                lactual= loc.getLatitude();
-                lonactual= loc.getLongitude();
-        }
-    }
-
-    public class Localizacion implements LocationListener {
-        Traslado traslado;
-
-        public Traslado getTraslado() {
-            return traslado;
-        }
-        public void setTraslado(Traslado traslado) {
-            this.traslado = traslado;
-        }
-        @Override
-        public void onLocationChanged(Location loc) {
-             loc.getLatitude();
-             loc.getLongitude();
-
-            if(loc.getLatitude() !=0.0 && loc.getLongitude() !=0.0){
-                this.traslado.setLocation(loc);
-            }
-
-        }
-
-        @Override
-        public void onProviderDisabled(String provider) {
-            Toast.makeText(getApplicationContext(),"GPS Desactivado",Toast.LENGTH_LONG).show();
-        }
-
-        @Override
-        public void onProviderEnabled(String provider) {
-            Toast.makeText(getApplicationContext(),"GPS Activado",Toast.LENGTH_LONG).show();
-        }
-
-        @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-            switch (status) {
-                case LocationProvider.AVAILABLE:
-                    Log.d("debug", "LocationProvider.AVAILABLE");
-                    break;
-                case LocationProvider.OUT_OF_SERVICE:
-                    Log.d("debug", "LocationProvider.OUT_OF_SERVICE");
-                    break;
-                case LocationProvider.TEMPORARILY_UNAVAILABLE:
-                    Log.d("debug", "LocationProvider.TEMPORARILY_UNAVAILABLE");
-                    break;
-            }
-        }
-    }
 }

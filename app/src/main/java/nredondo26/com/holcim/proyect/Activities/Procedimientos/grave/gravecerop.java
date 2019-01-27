@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 
 import nredondo26.com.holcim.R;
+import nredondo26.com.holcim.proyect.Activities.Centros;
+import nredondo26.com.holcim.proyect.Activities.Centrosmedicos;
 import nredondo26.com.holcim.proyect.Activities.LlamarNueveonce;
 import nredondo26.com.holcim.proyect.Activities.Traslado;
 
@@ -24,7 +26,8 @@ public class gravecerop extends AppCompatActivity {
         botonpaciente2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent inte= new Intent(getApplicationContext(), Traslado.class);
+           //     Intent inte= new Intent(getApplicationContext(), Traslado.class);
+                Intent inte= new Intent(getApplicationContext(), Centros.class);
                 startActivity(inte);
             }
         });
