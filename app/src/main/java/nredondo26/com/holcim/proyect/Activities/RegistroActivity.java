@@ -5,14 +5,13 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatSpinner;
 import android.text.TextUtils;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -20,19 +19,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.error.VolleyError;
-import com.android.volley.request.StringRequest;
+import com.android.volley.request.SimpleMultiPartRequest;
 import com.android.volley.toolbox.Volley;
-
-import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.util.HashMap;
-import java.util.Map;
-
+import java.net.URISyntaxException;
 import nredondo26.com.holcim.R;
 
 
@@ -48,10 +41,9 @@ public class RegistroActivity extends AppCompatActivity {
     String HttpUrl = "http://api-holcim.com/registro.php";
     Button cargarfoto;
     Uri imageUri;
-    Bitmap profilePicture;
     ImageView imagenv;
     boolean IMAGE_STATUS = false;
-    String rimagen;
+    String rutaimagen;
     private static final int PICK_IMAGE = 100;
 
 
@@ -102,8 +94,6 @@ public class RegistroActivity extends AppCompatActivity {
 
         AppCompatSpinner spinner_order_type = findViewById(R.id.spinner_order_type);
         String[] letra = {"ZONA",
-               // "Pipiral",
-                //"Cartagena",
                 "Bello",
                 "Buga",
                 "Cali Sur",
@@ -172,99 +162,99 @@ public class RegistroActivity extends AppCompatActivity {
     }
 
     public void Registarusuario() {
+
         progressDialog.setMessage("Please Wait");
         progressDialog.show();
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, HttpUrl,
+
+        try {
+            rutaimagen=getPath(getApplicationContext(),imageUri);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
+        SimpleMultiPartRequest smr = new SimpleMultiPartRequest(Request.Method.POST, HttpUrl,
                 new Response.Listener<String>() {
                     @Override
-                    public void onResponse(String ServerResponse) {
+                    public void onResponse(String response) {
                         progressDialog.dismiss();
-                        if (ServerResponse.contains("exitoso")) {
+                        if (response.contains("exitoso")) {
                             Toast.makeText(getApplicationContext(), "Registro exitoso", Toast.LENGTH_LONG).show();
                             finish();
                             Intent intent = new Intent(RegistroActivity.this, LoginActivity.class);
                             startActivity(intent);
                         } else {
-                            Toast.makeText(RegistroActivity.this, ServerResponse, Toast.LENGTH_LONG).show();
+                            Toast.makeText(RegistroActivity.this, response, Toast.LENGTH_LONG).show();
                         }
                     }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        progressDialog.dismiss();
-                        Toast.makeText(getApplicationContext(), "Problemas con la conexión", Toast.LENGTH_LONG).show();
-                    }
-                }) {
+                }, new Response.ErrorListener(){
             @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                rimagen= convertBitmapToString(profilePicture);
-                params.put("nombre", editnombreholder);
-                params.put("apellidos", editapellidosholder);
-                params.put("zona", spinner_order_typeholder);
-                params.put("area", spinner_order_type2holder);
-                params.put("email", editemailholder);
-                params.put("password", editpassholder);
-                params.put("imagenperfil", rimagen);
-                return params;
+            public void onErrorResponse(VolleyError error) {
+              //  progressDialog.dismiss();
+                Log.e("error",error.toString());
+                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
             }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(RegistroActivity.this);
-        requestQueue.add(stringRequest);
+        });
+        smr.addStringParam("nombre", editnombreholder);
+        smr.addStringParam("apellidos", editapellidosholder);
+        smr.addStringParam("zona", spinner_order_typeholder);
+        smr.addStringParam("area", spinner_order_type2holder);
+        smr.addStringParam("email", editemailholder);
+        smr.addStringParam("password", editpassholder);
+        smr.addFile("imagen", rutaimagen);
+
+        RequestQueue mRequestQueue = Volley.newRequestQueue(getApplicationContext());
+        mRequestQueue.add(smr);
+
     }
 
 
     private void openGallery(){
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
-        startActivityForResult(intent, PICK_IMAGE);
-    }
+        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(gallery, PICK_IMAGE);
 
-    private String convertBitmapToString(Bitmap profilePicture) {
-
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        profilePicture.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-        byte[] array = byteArrayOutputStream.toByteArray();
-        String foto = Base64.encodeToString(array, Base64.DEFAULT);
-        return foto;
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         if(resultCode == RESULT_OK && requestCode == PICK_IMAGE){
+            imageUri = data.getData();
+            imagenv.setImageURI(imageUri);
+            IMAGE_STATUS=true;
+
             try {
-                imageUri = data.getData();
-                profilePicture = reduceBitmap(this, String.valueOf(imageUri), 500, 500);
-                imagenv.setImageBitmap(profilePicture);
-                IMAGE_STATUS=true;
-            }catch (Exception ex){
-                Log.e("ERROR" , ex.getMessage() );
+                String ruta_image=getPath(this,imageUri);
+
+                Log.e("TAG",ruta_image);
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
             }
-        }else{
-            Log.e("ERROR" , "no optubo la imagen");
         }
     }
 
-    public static Bitmap reduceBitmap(Context contexto, String uri, int maxAncho, int maxAlto) {
-        try {
-            final BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inJustDecodeBounds = true;
-            BitmapFactory.decodeStream(contexto.getContentResolver()
-                    .openInputStream(Uri.parse(uri)), null, options);
-            options.inSampleSize = (int) Math.max(
-                    Math.ceil(options.outWidth / maxAncho),
-                    Math.ceil(options.outHeight / maxAlto));
-            options.inJustDecodeBounds = false;
-            return BitmapFactory.decodeStream(contexto.getContentResolver()
-                    .openInputStream(Uri.parse(uri)), null, options);
-        } catch (FileNotFoundException e) {
-            Toast.makeText(contexto, "Fichero/recurso no encontrado",
-                    Toast.LENGTH_LONG).show();
-            e.printStackTrace();
-            return null;
+    public static String getPath(Context context, Uri uri) throws URISyntaxException {
+        if ("content".equalsIgnoreCase(uri.getScheme())) {
+            String[] projection = { "_data" };
+            Cursor cursor = null;
+            try {
+                cursor = context.getContentResolver().query(uri, projection, null, null, null);
+                int column_index = cursor.getColumnIndexOrThrow("_data");
+                if (cursor.moveToFirst()) {
+                    return cursor.getString(column_index);
+                }
+            } catch (Exception e) {
+            }
         }
+        else if ("file".equalsIgnoreCase(uri.getScheme())) {
+            return uri.getPath();
+        }
+
+        return null;
     }
+
+
+
+
+
 
 
 }

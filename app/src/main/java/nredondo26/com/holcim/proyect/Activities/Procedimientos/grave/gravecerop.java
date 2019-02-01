@@ -17,6 +17,9 @@ public class gravecerop extends AppCompatActivity {
 
     Button botonpaciente2;
     Button botonprocedimiento2;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +30,8 @@ public class gravecerop extends AppCompatActivity {
             @Override
             public void onClick(View v) {
            //     Intent inte= new Intent(getApplicationContext(), Traslado.class);
+               // cod=getIntent().getExtras().getString("cod");
+
                 Intent inte= new Intent(getApplicationContext(), Centros.class);
                 startActivity(inte);
             }

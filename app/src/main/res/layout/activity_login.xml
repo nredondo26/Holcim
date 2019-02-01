@@ -17,7 +17,7 @@
         android:background="@drawable/caja"
         android:ems="10"
         android:hint="@string/Email"
-        android:inputType="textPersonName"
+        android:inputType="textEmailAddress"
         android:padding="10dp"
         android:textColor="@color/blanco"
         android:textColorHint="@color/blanco"
@@ -102,5 +102,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent" />
+
+
 
 </android.support.constraint.ConstraintLayout>

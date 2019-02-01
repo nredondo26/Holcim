@@ -3,11 +3,11 @@ package nredondo26.com.holcim.proyect.Model;
 public class Atributos_centrosmedicos {
 
     String nombre;
-    Double latitud;
-    Double longitud;
+    String latitud;
+    String longitud;
 
 
-    public Atributos_centrosmedicos(String nombre, Double latitud, Double longitud) {
+    public Atributos_centrosmedicos(String nombre, String latitud, String longitud) {
         this.nombre = nombre;
         this.latitud = latitud;
         this.longitud = longitud;
@@ -22,19 +22,19 @@ public class Atributos_centrosmedicos {
         this.nombre = nombre;
     }
 
-    public Double getLatitud() {
+    public String getLatitud() {
         return latitud;
     }
 
-    public void setLatitud(Double latitud) {
+    public void setLatitud(String latitud) {
         this.latitud = latitud;
     }
 
-    public Double getLongitud() {
+    public String getLongitud() {
         return longitud;
     }
 
-    public void setLongitud(Double longitud) {
+    public void setLongitud(String longitud) {
         this.longitud = longitud;
     }
 }

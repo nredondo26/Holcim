@@ -5,11 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,9 +25,10 @@ import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonObjectRequest;
 import com.android.volley.request.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.io.ByteArrayInputStream;
 import de.hdodenhof.circleimageview.CircleImageView;
 import nredondo26.com.holcim.R;
 
@@ -138,6 +138,7 @@ public class PerfilActivity extends AppCompatActivity {
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, HttpUrlc, null, new Response.Listener<JSONObject>() {
+                    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
                     @SuppressLint("SetTextI18n")
                     @Override
                     public void onResponse(JSONObject response) {
@@ -147,21 +148,19 @@ public class PerfilActivity extends AppCompatActivity {
                         String rarea=null;
                         String rimagenperfil=null;
                         try {
-
+                           // Log.e("Repuesta", String.valueOf(response));
                             rnombres = response.getString("nombre");
                             rapellidos = response.getString("apellidos");
                             rzona = response.getString("zona");
                             rarea = response.getString("area");
                             rimagenperfil = response.getString("imagenperfil");
 
-                            byte[] fot= Base64.decode(rimagenperfil, Base64.DEFAULT);
-                            ByteArrayInputStream bais1 = new ByteArrayInputStream(fot);
-                            Bitmap bitmap = BitmapFactory.decodeStream(bais1);
+                            Log.e("Repuesta",rimagenperfil);
 
                             nombre.setText(rnombres+" "+rapellidos);
                             area.setText(rarea);
                             zona.setText(rzona);
-                            foto.setImageBitmap(bitmap);
+                            Glide.with(PerfilActivity.this).load("http://api-holcim.com/img_perfil/"+rimagenperfil).into(foto);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
