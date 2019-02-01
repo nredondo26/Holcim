@@ -35,8 +35,8 @@ public class Adapter_centrosmedicos extends RecyclerView.Adapter<Adapter_centros
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
 
         viewHolder.txt_nombre.setText(atributosList.get(i).getNombre());
-        viewHolder.txt_latitud.setText("Latitud: "+atributosList.get(i).getLatitud());
-        viewHolder.txt_longitd.setText("Longitud: "+atributosList.get(i).getLongitud());
+      //  viewHolder.txt_latitud.setText("Latitud: "+atributosList.get(i).getLatitud());
+        // viewHolder.txt_longitd.setText("Longitud: "+atributosList.get(i).getLongitud());
 
         viewHolder.carV_centrosmedicos.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,8 +62,8 @@ public class Adapter_centrosmedicos extends RecyclerView.Adapter<Adapter_centros
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView txt_nombre;
-        TextView txt_latitud;
-        TextView txt_longitd;
+       // TextView txt_latitud;
+       // TextView txt_longitd;
 
         CardView carV_centrosmedicos;
 
@@ -71,8 +71,9 @@ public class Adapter_centrosmedicos extends RecyclerView.Adapter<Adapter_centros
             super(item);
 
             txt_nombre = item.findViewById(R.id.nombrecm);
-            txt_latitud = item.findViewById(R.id.latitud);
-            txt_longitd = item.findViewById(R.id.longitud);
+          //  txt_latitud = item.findViewById(R.id.latitud);
+           // txt_longitd = item.findViewById(R.id.longitud);
+            carV_centrosmedicos = item.findViewById(R.id.carV_centrosmedicos);
 
         }
     }

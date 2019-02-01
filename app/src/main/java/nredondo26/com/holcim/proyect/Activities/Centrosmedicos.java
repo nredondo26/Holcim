@@ -2,6 +2,7 @@ package nredondo26.com.holcim.proyect.Activities;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -44,7 +45,7 @@ public class Centrosmedicos extends Fragment {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v=inflater.inflate(R.layout.fragment_centrosmedicos,container, false);
         atributosList = new ArrayList<>();
@@ -73,6 +74,8 @@ public class Centrosmedicos extends Fragment {
                                 String latitud=oneObject.getString("latitud");
                                 String longitud=oneObject.getString("longitud");
 
+                                Llenar(nombre,latitud,longitud);
+
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -93,6 +96,18 @@ public class Centrosmedicos extends Fragment {
             }
         };
         rq.add(str);
+    }
+
+    public void Llenar(String nom, String lat, String lon){
+
+        Atributos_centrosmedicos centros=new Atributos_centrosmedicos(nom,lat,lon);
+
+        centros.setNombre(nom);
+        centros.setLatitud(lat);
+        centros.setLongitud(lon);
+
+        atributosList.add(centros);
+        adapter.notifyDataSetChanged();
     }
 
 }

@@ -85,6 +85,7 @@
     <string name="manejo_especial">Manejo Especial</string>
     <string name="genero">Genero</string>
     <string name="edad">Edad</string>
+    <string name="p">0</string>
 
 </resources>
 
