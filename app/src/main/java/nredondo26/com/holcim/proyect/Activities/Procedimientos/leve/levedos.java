@@ -16,11 +16,14 @@ public class levedos extends AppCompatActivity {
     Button paciente;
     Button procedimiento;
     String cod= "102";
+    int id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_levedos);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        id=getIntent().getExtras().getInt("id");
 
         paciente= findViewById(R.id.botonpaciente);
         procedimiento= findViewById(R.id.botonprocedimiento);
@@ -38,6 +41,7 @@ public class levedos extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent ent = new Intent(getApplicationContext(), levedosp.class);
+                ent.putExtra("id", id);
                 startActivity(ent);
             }
         });

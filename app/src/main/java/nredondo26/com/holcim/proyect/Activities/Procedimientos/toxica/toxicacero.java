@@ -16,11 +16,14 @@ public class toxicacero extends AppCompatActivity {
     Button paciente;
     Button procedimiento;
     String cod= "400";
+    int id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_toxicacero);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        id=getIntent().getExtras().getInt("id");
 
         paciente= findViewById(R.id.botonpaciente);
         procedimiento= findViewById(R.id.botonprocedimiento);
@@ -38,6 +41,7 @@ public class toxicacero extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent ent = new Intent(getApplicationContext(), toxicacerop.class);
+                ent.putExtra("id", id);
                 startActivity(ent);
             }
         });

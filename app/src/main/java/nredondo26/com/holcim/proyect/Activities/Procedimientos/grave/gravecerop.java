@@ -17,7 +17,7 @@ public class gravecerop extends AppCompatActivity {
 
     Button botonpaciente2;
     Button botonprocedimiento2;
-
+    int id;
 
 
     @Override
@@ -25,14 +25,15 @@ public class gravecerop extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gravecerop);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        id=getIntent().getExtras().getInt("id");
+
         botonpaciente2= findViewById(R.id.botonpaciente2);
         botonpaciente2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-           //     Intent inte= new Intent(getApplicationContext(), Traslado.class);
-               // cod=getIntent().getExtras().getString("cod");
-
                 Intent inte= new Intent(getApplicationContext(), Centros.class);
+                inte.putExtra("id", id);
                 startActivity(inte);
             }
         });

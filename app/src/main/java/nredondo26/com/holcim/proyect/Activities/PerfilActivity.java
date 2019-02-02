@@ -132,6 +132,24 @@ public class PerfilActivity extends AppCompatActivity {
         });
     }
 
+    public String azona(int zona){
+        if(zona==1){return "Bello"; }
+        if(zona==2){return "Buga"; }
+        if(zona==3){return "Cali Sur"; }
+        if(zona==4){return "Cemento"; }
+        if(zona==5){return "Chia"; }
+        if(zona==6){return "Floridablanca"; }
+        if(zona==7){return "Nobsa"; }
+        if(zona==8){return "Palmira"; }
+        if(zona==9){return "Puente Aranda"; }
+        if(zona==10){return "Ricaurte"; }
+        if(zona==11){return "Teleport"; }
+        if(zona==12){return "Tunja"; }
+        if(zona==13){return "Villavicencio"; }else{
+            return "";
+        }
+    }
+
     public void  extraer(int id) {
 
         String HttpUrlc = "http://api-holcim.com/extraertodo.php?id="+id;
@@ -155,11 +173,11 @@ public class PerfilActivity extends AppCompatActivity {
                             rarea = response.getString("area");
                             rimagenperfil = response.getString("imagenperfil");
 
-                            Log.e("Repuesta",rimagenperfil);
+                            String zon= azona(Integer.parseInt(rzona));
 
                             nombre.setText(rnombres+" "+rapellidos);
                             area.setText(rarea);
-                            zona.setText(rzona);
+                            zona.setText(zon);
                             Glide.with(PerfilActivity.this).load("http://api-holcim.com/img_perfil/"+rimagenperfil).into(foto);
 
                         } catch (JSONException e) {

@@ -32,6 +32,7 @@ public class Centros extends AppCompatActivity {
     public List<Atributos_centrosmedicos> atributosList;
     public Adapter_centrosmedicos adapter;
     private RequestQueue rq;
+    int idd;
 
     static String URL_LICENCIA="http://api-holcim.com/centrosmedicos.php";
 
@@ -39,6 +40,9 @@ public class Centros extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_centros);
+
+        idd=getIntent().getExtras().getInt("id");
+
         rq= Volley.newRequestQueue(Centros.this);
 
         atributosList = new ArrayList<>();
@@ -48,21 +52,21 @@ public class Centros extends AppCompatActivity {
         adapter = new Adapter_centrosmedicos(atributosList,this);
         rv.setAdapter(adapter);
 
-        consulta_centrosmedicos(String.valueOf(1));
+        consulta_centrosmedicos(String.valueOf(idd));
 
     }
 
-    private void consulta_centrosmedicos(final String idplanta){
+    private void consulta_centrosmedicos(final String id){
         StringRequest str = new StringRequest(Request.Method.POST,URL_LICENCIA,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response){
+                        Log.e("idquimicos", response);
                         try {
                             JSONArray json = new JSONArray(response);
                             for (int i=0; i < json.length(); i++)
                             {
                                 JSONObject oneObject = json.getJSONObject(i);
-                                String id=oneObject.getString("id");
                                 String nombre=oneObject.getString("nombre");
                                 String latitud=oneObject.getString("latitud");
                                 String longitud=oneObject.getString("longitud");
@@ -84,7 +88,7 @@ public class Centros extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> parametros = new HashMap<>();
-                parametros.put("idplanta", idplanta);
+                parametros.put("id", id);
                 return parametros;
             }
         };

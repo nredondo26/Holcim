@@ -16,11 +16,13 @@ public class graveseis extends AppCompatActivity {
     Button paciente;
     Button procedimiento;
     String cod= "206";
+    int id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graveseis);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        id=getIntent().getExtras().getInt("id");
 
         paciente= findViewById(R.id.botonpaciente);
         procedimiento= findViewById(R.id.botonprocedimiento);
@@ -38,6 +40,7 @@ public class graveseis extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent ent = new Intent(getApplicationContext(), graveseisp.class);
+                ent.putExtra("id", id);
                 startActivity(ent);
             }
         });

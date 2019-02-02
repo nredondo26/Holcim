@@ -151,6 +151,23 @@ public class RegistroActivity extends AppCompatActivity {
 
     }
 
+    public int cambiaspiner(String zona){
+        if(zona.equals("Bello")){return 1; }
+        if(zona.equals("Buga")){return 2; }
+        if(zona.equals("Cali Sur")){return 3; }
+        if(zona.equals("Cemento")){return 4; }
+        if(zona.equals("Chia")){return 5; }
+        if(zona.equals("Floridablanca")){return 6; }
+        if(zona.equals("Nobsa")){return 7; }
+        if(zona.equals("Palmira")){return 8; }
+        if(zona.equals("Puente Aranda")){return 9; }
+        if(zona.equals("Ricaurte")){return 10; }
+        if(zona.equals("Teleport")){return 11; }
+        if(zona.equals("Tunja")){return 12; }
+        if(zona.equals("Villavicencio")){return 13; }
+        return 0;
+    }
+
     public void CheckEditTextIsEmptyOrNot() {
         editnombreholder = editnombre.getText().toString().trim();
         editapellidosholder = editapellidos.getText().toString().trim();
@@ -189,14 +206,15 @@ public class RegistroActivity extends AppCompatActivity {
                 }, new Response.ErrorListener(){
             @Override
             public void onErrorResponse(VolleyError error) {
-              //  progressDialog.dismiss();
+                progressDialog.dismiss();
                 Log.e("error",error.toString());
                 Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
         smr.addStringParam("nombre", editnombreholder);
         smr.addStringParam("apellidos", editapellidosholder);
-        smr.addStringParam("zona", spinner_order_typeholder);
+        int valor = cambiaspiner(spinner_order_typeholder);
+        smr.addStringParam("zona", String.valueOf(valor));
         smr.addStringParam("area", spinner_order_type2holder);
         smr.addStringParam("email", editemailholder);
         smr.addStringParam("password", editpassholder);
