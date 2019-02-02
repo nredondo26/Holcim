@@ -26,7 +26,6 @@ import com.android.volley.request.JsonObjectRequest;
 import com.android.volley.request.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import de.hdodenhof.circleimageview.CircleImageView;

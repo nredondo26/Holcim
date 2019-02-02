@@ -180,7 +180,7 @@ public class RegistroActivity extends AppCompatActivity {
 
     public void Registarusuario() {
 
-        progressDialog.setMessage("Please Wait");
+        progressDialog.setMessage("Espere un momento");
         progressDialog.show();
 
         try {
@@ -265,7 +265,6 @@ public class RegistroActivity extends AppCompatActivity {
         else if ("file".equalsIgnoreCase(uri.getScheme())) {
             return uri.getPath();
         }
-
         return null;
     }
 
