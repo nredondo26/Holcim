@@ -1,14 +1,18 @@
 package nredondo26.com.holcim.proyect.Activities;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatSpinner;
 import android.text.TextUtils;
@@ -178,6 +182,7 @@ public class RegistroActivity extends AppCompatActivity {
         CheckEditText = !TextUtils.isEmpty(editnombreholder) && !TextUtils.isEmpty(editapellidosholder) && !TextUtils.isEmpty(editemailholder) && !TextUtils.isEmpty(editpassholder) && !TextUtils.isEmpty(spinner_order_typeholder) && !TextUtils.isEmpty(spinner_order_type2holder);
     }
 
+
     public void Registarusuario() {
 
         progressDialog.setMessage("Espere un momento");
@@ -199,7 +204,11 @@ public class RegistroActivity extends AppCompatActivity {
                             finish();
                             Intent intent = new Intent(RegistroActivity.this, LoginActivity.class);
                             startActivity(intent);
-                        } else {
+                        }
+                        if (response.contains("registrado")) {
+                            Toast.makeText(getApplicationContext(), "Email ya existe", Toast.LENGTH_LONG).show();
+                        }
+                        else {
                             Toast.makeText(RegistroActivity.this, response, Toast.LENGTH_LONG).show();
                         }
                     }

@@ -34,6 +34,7 @@ public class levecero extends AppCompatActivity {
             public void onClick(View v) {
                 Intent ent = new Intent(getApplicationContext(), Paciente.class);
                 ent.putExtra("cod", cod);
+                ent.putExtra("id", id);
                 startActivity(ent);
             }
         });

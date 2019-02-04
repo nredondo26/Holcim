@@ -1,9 +1,11 @@
 package nredondo26.com.holcim.proyect.Activities;
 
+import android.Manifest;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -98,6 +100,7 @@ public class Centrosmedicos extends Fragment {
         };
         rq.add(str);
     }
+
 
     public void Llenar(String nom,String dir, String lat, String lon){
 

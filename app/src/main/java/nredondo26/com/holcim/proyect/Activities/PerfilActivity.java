@@ -1,5 +1,6 @@
 package nredondo26.com.holcim.proyect.Activities;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +9,7 @@ import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -58,6 +60,10 @@ public class PerfilActivity extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueuee = Volley.newRequestQueue(getApplicationContext());
         requestQueueee = Volley.newRequestQueue(getApplicationContext());
+
+        solicita_permisos();
+
+
         if(rid!=0){
             extraer(rid);
         }else{
@@ -149,6 +155,10 @@ public class PerfilActivity extends AppCompatActivity {
         }
     }
 
+    public void solicita_permisos(){
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.READ_CONTACTS,Manifest.permission.CALL_PHONE,Manifest.permission.ACCESS_FINE_LOCATION},100);
+    }
+
     public void  extraer(int id) {
 
         String HttpUrlc = "http://api-holcim.com/extraertodo.php?id="+id;
@@ -204,6 +214,8 @@ public class PerfilActivity extends AppCompatActivity {
         intent.putExtra("id", rid);
         startActivity(intent);
     }
+
+
 
     public void cambiarimagen() {
         Intent intent = new Intent(PerfilActivity.this, Cambiar_imagen_Activity.class);

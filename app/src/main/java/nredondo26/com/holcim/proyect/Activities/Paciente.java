@@ -1,32 +1,29 @@
 package nredondo26.com.holcim.proyect.Activities;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.graphics.Bitmap;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.error.VolleyError;
-import com.android.volley.request.StringRequest;
+import com.android.volley.request.SimpleMultiPartRequest;
 import com.android.volley.toolbox.Volley;
-import com.nileshp.multiphotopicker.photopicker.activity.PickImageActivity;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.net.URISyntaxException;
+
 
 import nredondo26.com.holcim.R;
 
@@ -38,14 +35,26 @@ public class Paciente extends AppCompatActivity {
     EditText editanotacion;
     Button benviar;
     String editnombreholder, editareaholder, editjefeholder, editanotacionholder,cod;
+    int idusaurio;
     Boolean CheckEditText;
     RequestQueue requestQueue;
-    String valorid;
+    ProgressDialog progressDialog;
     String HttpUrl = "http://api-holcim.com/registropaciente.php";
-    String HttpUrlf ="http://api-holcim.com/subirimagen.php";
-    Button btnPhoto;
-    ArrayList<String> listaImagenes;
-    ArrayList<String> listaRuta;
+
+    private static final int PICK_IMAGE1 = 101;
+    private static final int PICK_IMAGE2 = 102;
+    private static final int PICK_IMAGE3 = 103;
+    Uri imageUri1,imageUri2,imageUri3;
+    ImageView img1;
+    ImageView img2;
+    ImageView img3;
+    boolean IMAGE_STATUS1 = false;
+    boolean IMAGE_STATUS2 = false;
+    boolean IMAGE_STATUS3 = false;
+    String rutaimagen1;
+    String rutaimagen2;
+    String rutaimagen3;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,33 +63,62 @@ public class Paciente extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         cod=getIntent().getExtras().getString("cod");
+        idusaurio=getIntent().getExtras().getInt("id");
 
         requestQueue = Volley.newRequestQueue(getApplicationContext());
+
+        progressDialog = new ProgressDialog(Paciente.this);
 
         editnombre= findViewById(R.id.editnombre);
         editarea= findViewById(R.id.editarea);
         editjefe= findViewById(R.id.editjefe);
         editanotacion= findViewById(R.id.editanotacion);
         benviar= findViewById(R.id.benviar);
-        listaImagenes = new ArrayList<>();
-        btnPhoto= findViewById(R.id.btnImagen);
 
-        btnPhoto.setOnClickListener(new View.OnClickListener() {
+        img1= findViewById(R.id.img1);
+        img2= findViewById(R.id.img2);
+        img3= findViewById(R.id.img3);
+
+        img1.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
-                Intent mIntent = new Intent(getApplicationContext(), PickImageActivity.class);
-                mIntent.putExtra(PickImageActivity.KEY_LIMIT_MAX_IMAGE, 5);
-                mIntent.putExtra(PickImageActivity.KEY_LIMIT_MIN_IMAGE, 1);
-                startActivityForResult(mIntent, PickImageActivity.PICKER_REQUEST_CODE);
+                openGallery(PICK_IMAGE1);
             }
         });
 
+        img2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGallery(PICK_IMAGE2);
+            }
+        });
+
+        img3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGallery(PICK_IMAGE3);
+            }
+        });
 
         benviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 CheckEditTextIsEmptyOrNot();
                 if (CheckEditText) {
-                    Registarusuario();
+                    if(IMAGE_STATUS1==true & IMAGE_STATUS2==true & IMAGE_STATUS3==true){
+                        Registarusuario1();
+                    }
+                    if(IMAGE_STATUS1==true & IMAGE_STATUS2==true & IMAGE_STATUS3==false){
+                        Registarusuario2();
+                    }
+                    if(IMAGE_STATUS1==true & IMAGE_STATUS2==false & IMAGE_STATUS3==false){
+                        Registarusuario3();
+                    }
+
+                    if(IMAGE_STATUS1==false & IMAGE_STATUS2==false & IMAGE_STATUS3==false){
+                        Registarusuario4();
+                    }
+
                 } else {
                     Toast.makeText(getApplicationContext(), "Por favor complete todos los campos del formulario.", Toast.LENGTH_LONG).show();
                 }
@@ -89,38 +127,251 @@ public class Paciente extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    private void openGallery(int pick){
+        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(gallery, pick);
 
-        if (resultCode != RESULT_OK) {
-            return;
+    }
+
+    public void Registarusuario1() {
+
+        progressDialog.setMessage("Espere un momento");
+        progressDialog.show();
+
+        try {
+                rutaimagen1=getPath(getApplicationContext(),imageUri1);
+                rutaimagen2=getPath(getApplicationContext(),imageUri2);
+                rutaimagen3=getPath(getApplicationContext(),imageUri3);
+
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
         }
-        if (resultCode == -1 && requestCode == PickImageActivity.PICKER_REQUEST_CODE) {
-            this.listaRuta = data.getExtras().getStringArrayList(PickImageActivity.KEY_DATA_RESULT);
-            if (this.listaRuta != null && !this.listaRuta.isEmpty()) {
-                StringBuilder sb=new StringBuilder("");
-                for(int i=0;i<listaRuta.size();i++) {
-                    Bitmap bitmap = null;
-                    try {
-                        bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),  Uri.fromFile(new File(listaRuta.get(i))));
-                    } catch (IOException e) {
-                        e.printStackTrace();
+
+        SimpleMultiPartRequest smr = new SimpleMultiPartRequest(Request.Method.POST, HttpUrl,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        progressDialog.dismiss();
+                        if (response.contains("exitoso")) {
+                            progressDialog.dismiss();
+                            Toast.makeText(getApplicationContext(), "Registro exitoso", Toast.LENGTH_LONG).show();
+                            finish();
+                            Intent intent = new Intent(Paciente.this, PerfilActivity.class);
+                            intent.putExtra("id", idusaurio);
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(Paciente.this, response, Toast.LENGTH_LONG).show();
+                        }
                     }
-                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream);
-                    String encodedImage = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
+                }, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                Log.e("error",error.toString());
+                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+        smr.addStringParam("nombre", editnombreholder);
+        smr.addStringParam("anotacion", editanotacionholder);
+        smr.addStringParam("area", editareaholder);
+        smr.addStringParam("jefe", editjefeholder);
+        smr.addStringParam("cod", cod);
+        smr.addStringParam("idusuario", String.valueOf(idusaurio));
+        smr.addFile("img1", rutaimagen1);
+        smr.addFile("img2", rutaimagen2);
+        smr.addFile("img3", rutaimagen3);
 
-                    listaImagenes.add(encodedImage);
+        RequestQueue mRequestQueue = Volley.newRequestQueue(getApplicationContext());
+        mRequestQueue.add(smr);
 
-                    sb.append(listaRuta.get(i));
-                    sb.append("\n");
+    }
 
+    public void Registarusuario2() {
+
+        progressDialog.setMessage("Espere un momento");
+        progressDialog.show();
+
+        try {
+            rutaimagen1=getPath(getApplicationContext(),imageUri1);
+            rutaimagen2=getPath(getApplicationContext(),imageUri2);
+
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
+        SimpleMultiPartRequest smr = new SimpleMultiPartRequest(Request.Method.POST, HttpUrl,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        progressDialog.dismiss();
+                        if (response.contains("exitoso")) {
+                            progressDialog.dismiss();
+                            Toast.makeText(getApplicationContext(), "Registro exitoso", Toast.LENGTH_LONG).show();
+                            finish();
+                            Intent intent = new Intent(Paciente.this, PerfilActivity.class);
+                            intent.putExtra("id", idusaurio);
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(Paciente.this, response, Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                Log.e("error",error.toString());
+                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+        smr.addStringParam("nombre", editnombreholder);
+        smr.addStringParam("anotacion", editanotacionholder);
+        smr.addStringParam("area", editareaholder);
+        smr.addStringParam("jefe", editjefeholder);
+        smr.addStringParam("cod", cod);
+        smr.addStringParam("idusuario", String.valueOf(idusaurio));
+        smr.addFile("img1", rutaimagen1);
+        smr.addFile("img2", rutaimagen2);
+
+        RequestQueue mRequestQueue = Volley.newRequestQueue(getApplicationContext());
+        mRequestQueue.add(smr);
+
+    }
+
+    public void Registarusuario3() {
+
+        progressDialog.setMessage("Espere un momento");
+        progressDialog.show();
+
+        try {
+            rutaimagen1=getPath(getApplicationContext(),imageUri1);
+
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
+        SimpleMultiPartRequest smr = new SimpleMultiPartRequest(Request.Method.POST, HttpUrl,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        progressDialog.dismiss();
+                        if (response.contains("exitoso")) {
+                            progressDialog.dismiss();
+                            Toast.makeText(getApplicationContext(), "Registro exitoso", Toast.LENGTH_LONG).show();
+                            finish();
+                            Intent intent = new Intent(Paciente.this, PerfilActivity.class);
+                            intent.putExtra("id", idusaurio);
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(Paciente.this, response, Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                Log.e("error",error.toString());
+                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+        smr.addStringParam("nombre", editnombreholder);
+        smr.addStringParam("anotacion", editanotacionholder);
+        smr.addStringParam("area", editareaholder);
+        smr.addStringParam("jefe", editjefeholder);
+        smr.addStringParam("cod", cod);
+        smr.addStringParam("idusuario", String.valueOf(idusaurio));
+        smr.addFile("img1", rutaimagen1);
+
+        RequestQueue mRequestQueue = Volley.newRequestQueue(getApplicationContext());
+        mRequestQueue.add(smr);
+
+    }
+
+    public void Registarusuario4() {
+
+        progressDialog.setMessage("Espere un momento");
+        progressDialog.show();
+
+        SimpleMultiPartRequest smr = new SimpleMultiPartRequest(Request.Method.POST, HttpUrl,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        progressDialog.dismiss();
+                        if (response.contains("exitoso")) {
+                            progressDialog.dismiss();
+                            Toast.makeText(getApplicationContext(), "Registro exitoso", Toast.LENGTH_LONG).show();
+                            finish();
+                            Intent intent = new Intent(Paciente.this, PerfilActivity.class);
+                            intent.putExtra("id", idusaurio);
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(Paciente.this, response, Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                Log.e("error",error.toString());
+                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+        smr.addStringParam("nombre", editnombreholder);
+        smr.addStringParam("anotacion", editanotacionholder);
+        smr.addStringParam("area", editareaholder);
+        smr.addStringParam("jefe", editjefeholder);
+        smr.addStringParam("cod", cod);
+        smr.addStringParam("idusuario", String.valueOf(idusaurio));
+
+        RequestQueue mRequestQueue = Volley.newRequestQueue(getApplicationContext());
+        mRequestQueue.add(smr);
+
+    }
+
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(resultCode == RESULT_OK ){
+
+            if(requestCode == PICK_IMAGE1){
+                imageUri1 = data.getData();
+                img1.setImageURI(imageUri1);
+                IMAGE_STATUS1=true;
+            }
+            if(requestCode == PICK_IMAGE2){
+                    imageUri2 = data.getData();
+                    img2.setImageURI(imageUri2);
+                    IMAGE_STATUS2=true;
+            }
+
+             if(requestCode == PICK_IMAGE3){
+                        imageUri3 = data.getData();
+                        img3.setImageURI(imageUri3);
+                        IMAGE_STATUS3=true;
+             }
+        }
+    }
+
+
+
+
+    public static String getPath(Context context, Uri uri) throws URISyntaxException {
+        if ("content".equalsIgnoreCase(uri.getScheme())) {
+            String[] projection = { "_data" };
+            Cursor cursor = null;
+            try {
+                cursor = context.getContentResolver().query(uri, projection, null, null, null);
+                int column_index = cursor.getColumnIndexOrThrow("_data");
+                if (cursor.moveToFirst()) {
+                    return cursor.getString(column_index);
                 }
-                //Log.e("RESULTADO : ","LISTA : "+listaImagenes.size());
-               // tvResult.setText(sb.toString()); // here this is textview for sample use...
+            } catch (Exception e) {
             }
         }
+        else if ("file".equalsIgnoreCase(uri.getScheme())) {
+            return uri.getPath();
+        }
+        return null;
     }
 
     public void CheckEditTextIsEmptyOrNot() {
@@ -131,84 +382,6 @@ public class Paciente extends AppCompatActivity {
         CheckEditText = !TextUtils.isEmpty(editnombreholder) && !TextUtils.isEmpty(editareaholder) && !TextUtils.isEmpty(editjefeholder) && !TextUtils.isEmpty(editanotacionholder);
     }
 
-    public void Registarusuario() {
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, HttpUrl,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String ServerResponse) {
-
-                        valorid= ServerResponse.substring(7);
-
-                        for(int i=0; i<listaImagenes.size();i++){
-                            Registrarfoto(valorid,listaImagenes.get(i));
-                        }
-
-                        Log.e("NUMERO","NUMERO : "+valorid);
-
-                        if (ServerResponse.contains("exitoso")) {
-                            Toast.makeText(getApplicationContext(), "Reporte exitoso", Toast.LENGTH_LONG).show();
-                            finish();
-                        } else {
-                            Toast.makeText(Paciente.this, ServerResponse, Toast.LENGTH_LONG).show();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-
-                        Toast.makeText(getApplicationContext(), "Problemas con la conexión", Toast.LENGTH_LONG).show();
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("nombre", editnombreholder);
-                params.put("area", editareaholder);
-                params.put("jefe", editjefeholder);
-                params.put("anotacion",  editanotacionholder);
-                params.put("cod",cod);
-              //  params.put("foto", String.valueOf(listaImagenes));
-                return params;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(Paciente.this);
-        requestQueue.add(stringRequest);
-    }
-
-    public void Registrarfoto(final String idfot, final String fotof) {
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, HttpUrlf,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String ServerResponse) {
-
-                        if (ServerResponse.contains("exitoso")) {
-                            Toast.makeText(getApplicationContext(), "Subiendo Imagen", Toast.LENGTH_LONG).show();
-                            finish();
-                        } else {
-                            Toast.makeText(Paciente.this, ServerResponse, Toast.LENGTH_LONG).show();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-
-                        Toast.makeText(getApplicationContext(), "Problemas con la conexión", Toast.LENGTH_LONG).show();
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("idfo", idfot);
-                params.put("foto", fotof);
-                return params;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(Paciente.this);
-        requestQueue.add(stringRequest);
-    }
 
 }
