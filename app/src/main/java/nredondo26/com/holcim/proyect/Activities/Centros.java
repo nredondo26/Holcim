@@ -68,10 +68,11 @@ public class Centros extends AppCompatActivity {
                             {
                                 JSONObject oneObject = json.getJSONObject(i);
                                 String nombre=oneObject.getString("nombre");
+                                String direccion=oneObject.getString("direccion");
                                 String latitud=oneObject.getString("latitud");
                                 String longitud=oneObject.getString("longitud");
 
-                                Llenar(nombre,latitud,longitud);
+                                Llenar(nombre,direccion,latitud,longitud);
 
                             }
                         } catch (JSONException e) {
@@ -95,11 +96,12 @@ public class Centros extends AppCompatActivity {
         rq.add(str);
     }
 
-    public void Llenar(String nom, String lat, String lon){
+    public void Llenar(String nom,String dir, String lat, String lon){
 
-        Atributos_centrosmedicos centros=new Atributos_centrosmedicos(nom,lat,lon);
+        Atributos_centrosmedicos centros=new Atributos_centrosmedicos(nom,dir,lat,lon);
 
         centros.setNombre(nom);
+        centros.setDireccion(dir);
         centros.setLatitud(lat);
         centros.setLongitud(lon);
 
