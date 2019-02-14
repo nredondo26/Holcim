@@ -72,21 +72,7 @@ public class tres extends Fragment {
                 try {
                     JSONObject JSON = new JSONObject(response);
                     String rzona = JSON.getString("zona");
-
-                    if(rzona.equals("Bello")) idzona="1";
-                    if(rzona.equals("Buga")) idzona="2";
-                    if(rzona.equals("Cali Sur")) idzona="3";
-                    if(rzona.equals("Cemento")) idzona="4";
-                    if(rzona.equals("Chia")) idzona="5";
-                    if(rzona.equals("Floridablanca")) idzona="6";
-                    if(rzona.equals("Nobsa")) idzona="7";
-                    if(rzona.equals("Palmira")) idzona="8";
-                    if(rzona.equals("Puente Aranda")) idzona="9";
-                    if(rzona.equals("Ricaurte")) idzona="10";
-                    if(rzona.equals("Teleport")) idzona="11";
-                    if(rzona.equals("Tunja")) idzona="12";
-                    if(rzona.equals("Villavicencio")) idzona="13";
-                    enviar(idzona);
+                    enviar(rzona);
 
                 } catch (JSONException e) {
                     e.printStackTrace();

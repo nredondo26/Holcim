@@ -75,7 +75,6 @@ public class PerfilActivity extends AppCompatActivity {
         area = findViewById(R.id.tbriga);
         zona = findViewById(R.id.tplanta);
 
-
         emegerncias = findViewById(R.id.imageButton);
         bleve = findViewById(R.id.leve);
         bquimicos = findViewById(R.id.quimicas);
@@ -213,9 +212,8 @@ public class PerfilActivity extends AppCompatActivity {
         Intent intent = new Intent(PerfilActivity.this, EditarActivity.class);
         intent.putExtra("id", rid);
         startActivity(intent);
+        finish();
     }
-
-
 
     public void cambiarimagen() {
         Intent intent = new Intent(PerfilActivity.this, Cambiar_imagen_Activity.class);

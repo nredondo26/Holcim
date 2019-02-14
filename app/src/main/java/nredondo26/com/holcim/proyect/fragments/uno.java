@@ -3,8 +3,10 @@ package nredondo26.com.holcim.proyect.fragments;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,19 +14,25 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.error.AuthFailureError;
 import com.android.volley.error.VolleyError;
+import com.android.volley.request.JsonObjectRequest;
 import com.android.volley.request.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.List;
 import nredondo26.com.holcim.R;
+import nredondo26.com.holcim.proyect.Activities.PerfilActivity;
 import nredondo26.com.holcim.proyect.Adapter.RecyclerViewAdapter;
 import nredondo26.com.holcim.proyect.Model.Contact;
 import java.util.Map;
@@ -39,7 +47,7 @@ public class uno extends Fragment {
     public String res;
     public  static  final  String URL_IP="http://api-holcim.com/ccinterno.php";
     public  static  final  String URL="http://api-holcim.com/ccp.php";
-    String ID_USUARIO;
+    int ID_USUARIO;
     private RequestQueue rq;
     View v;
     private RecyclerView myrecyclerview;
@@ -50,6 +58,9 @@ public class uno extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_uno, container, false);
         myrecyclerview = v.findViewById(R.id.contac_recyclerview);
+
+        cargarpreferencias();
+
         mData = new ArrayList<>();
         LinearLayoutManager lm = new LinearLayoutManager(getContext());
         myrecyclerview.setLayoutManager(lm);
@@ -57,7 +68,7 @@ public class uno extends Fragment {
         myrecyclerview.setAdapter(adapter);
 
         rq = Volley.newRequestQueue(getContext());
-        cargarpreferencias();
+
         extraer();
         return v;
     }
@@ -72,20 +83,7 @@ public class uno extends Fragment {
                     JSONObject JSON = new JSONObject(response);
                     String rzona = JSON.getString("zona");
 
-                    if(rzona.equals("Bello")) idzona="1";
-                    if(rzona.equals("Buga")) idzona="2";
-                    if(rzona.equals("Cali Sur")) idzona="3";
-                    if(rzona.equals("Cemento")) idzona="4";
-                    if(rzona.equals("Chia")) idzona="5";
-                    if(rzona.equals("Floridablanca")) idzona="6";
-                    if(rzona.equals("Nobsa")) idzona="7";
-                    if(rzona.equals("Palmira")) idzona="8";
-                    if(rzona.equals("Puente Aranda")) idzona="9";
-                    if(rzona.equals("Ricaurte")) idzona="10";
-                    if(rzona.equals("Teleport")) idzona="11";
-                    if(rzona.equals("Tunja")) idzona="12";
-                    if(rzona.equals("Villavicencio")) idzona="13";
-                    enviar(idzona);
+                    enviar(rzona);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -102,7 +100,7 @@ public class uno extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> parametros = new HashMap<>();
-                parametros.put("id", ID_USUARIO);
+                parametros.put("id", String.valueOf(ID_USUARIO));
                 return parametros;
 
             }
@@ -113,7 +111,7 @@ public class uno extends Fragment {
     private void cargarpreferencias() {
         SharedPreferences preferences = this.getActivity().getSharedPreferences("CREDENCIALES", Context.MODE_PRIVATE);
         int id= preferences.getInt("id", 0);
-        ID_USUARIO= String.valueOf(id);
+        ID_USUARIO= id;
     }
 
     private void enviar(final String ID_ZONA){
