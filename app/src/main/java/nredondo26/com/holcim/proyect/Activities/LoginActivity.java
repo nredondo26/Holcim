@@ -38,8 +38,6 @@ public class LoginActivity extends AppCompatActivity {
     Boolean CheckEditText;
     private  RequestQueue requestQueuee;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

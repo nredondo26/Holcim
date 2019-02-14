@@ -35,8 +35,8 @@ import nredondo26.com.holcim.R;
 
 public class RegistroActivity extends AppCompatActivity {
 
-    EditText editnombre, editapellidos, editemail, editpass;
-    String editnombreholder, editapellidosholder, editemailholder, editpassholder, spinner_order_typeholder, spinner_order_type2holder;
+    EditText editnombre, editapellidos, editemail, editpass,editcodempleado;
+    String editnombreholder, editapellidosholder, editemailholder, editpassholder, spinner_order_typeholder, spinner_order_type2holder,editcodempleadoholder;
     AppCompatSpinner spinner_order_type, spinner_order_type2;
     Button Registar;
     Boolean CheckEditText;
@@ -59,6 +59,7 @@ public class RegistroActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         editnombre = findViewById(R.id.editnombre);
+        editcodempleado = findViewById(R.id.editcodempleado);
         editapellidos = findViewById(R.id.editarea);
         editemail = findViewById(R.id.editjefe);
         editpass = findViewById(R.id.editanotacion);
@@ -177,9 +178,10 @@ public class RegistroActivity extends AppCompatActivity {
         editapellidosholder = editapellidos.getText().toString().trim();
         editemailholder = editemail.getText().toString().trim();
         editpassholder = editpass.getText().toString().trim();
+        editcodempleadoholder=editcodempleado.getText().toString().trim();
         spinner_order_typeholder = spinner_order_type.getSelectedItem().toString();
         spinner_order_type2holder = spinner_order_type2.getSelectedItem().toString();
-        CheckEditText = !TextUtils.isEmpty(editnombreholder) && !TextUtils.isEmpty(editapellidosholder) && !TextUtils.isEmpty(editemailholder) && !TextUtils.isEmpty(editpassholder) && !TextUtils.isEmpty(spinner_order_typeholder) && !TextUtils.isEmpty(spinner_order_type2holder);
+        CheckEditText = !TextUtils.isEmpty(editcodempleadoholder) && !TextUtils.isEmpty(editnombreholder) && !TextUtils.isEmpty(editapellidosholder) && !TextUtils.isEmpty(editemailholder) && !TextUtils.isEmpty(editpassholder) && !TextUtils.isEmpty(spinner_order_typeholder) && !TextUtils.isEmpty(spinner_order_type2holder);
     }
 
 
@@ -205,6 +207,10 @@ public class RegistroActivity extends AppCompatActivity {
                             Intent intent = new Intent(RegistroActivity.this, LoginActivity.class);
                             startActivity(intent);
                         }
+                        if (response.contains("Codnot")) {
+                            Toast.makeText(getApplicationContext(), "Codigo de empleado no existe", Toast.LENGTH_LONG).show();
+                        }
+
                         if (response.contains("registrado")) {
                             Toast.makeText(getApplicationContext(), "Email ya existe", Toast.LENGTH_LONG).show();
                         }
@@ -227,6 +233,7 @@ public class RegistroActivity extends AppCompatActivity {
         smr.addStringParam("area", spinner_order_type2holder);
         smr.addStringParam("email", editemailholder);
         smr.addStringParam("password", editpassholder);
+        smr.addStringParam("codempleado", editcodempleadoholder);
         smr.addFile("imagen", rutaimagen);
 
         RequestQueue mRequestQueue = Volley.newRequestQueue(getApplicationContext());

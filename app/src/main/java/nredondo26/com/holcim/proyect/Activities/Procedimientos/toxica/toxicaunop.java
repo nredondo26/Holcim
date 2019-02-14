@@ -41,6 +41,7 @@ public class toxicaunop extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent inte= new Intent(getApplicationContext(), LlamarNueveonce.class);
+                inte.putExtra("id", id);
                 startActivity(inte);
             }
         });

@@ -19,6 +19,7 @@ import nredondo26.com.holcim.proyect.fragments.uno;
 
 public class NumerosActivity extends AppCompatActivity {
 
+    int idd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,13 +27,14 @@ public class NumerosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_nelson_activity);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        idd=getIntent().getExtras().getInt("id");
+
         ViewPager viewPager = findViewById(R.id.viewpager);
         setupViewPager(viewPager);
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
     }
-
 
     private void setupViewPager(ViewPager viewPager) {
         NumerosActivity.ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
@@ -45,9 +47,6 @@ public class NumerosActivity extends AppCompatActivity {
 
     }
 
-
-
-    
     static class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();

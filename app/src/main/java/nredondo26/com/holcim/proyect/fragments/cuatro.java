@@ -4,7 +4,9 @@ package nredondo26.com.holcim.proyect.fragments;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +28,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+
 import nredondo26.com.holcim.R;
 import nredondo26.com.holcim.proyect.Adapter.RecyclerViewAdapter;
 import nredondo26.com.holcim.proyect.Model.Contact;
@@ -46,18 +50,18 @@ public class cuatro extends Fragment {
     private List<Contact> mData;
     private RecyclerViewAdapter adapter;
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_cuatro, container, false);
         myrecyclerview = v.findViewById(R.id.contac_recyclerview4);
+        rq = Volley.newRequestQueue(Objects.requireNonNull(getContext()));
         mData = new ArrayList<>();
         LinearLayoutManager lm = new LinearLayoutManager(getContext());
         myrecyclerview.setLayoutManager(lm);
         adapter = new RecyclerViewAdapter(getContext(),mData);
         myrecyclerview.setAdapter(adapter);
 
-
-        rq = Volley.newRequestQueue(getContext());
         cargarpreferencias();
         extraer();
         return v;
@@ -72,37 +76,7 @@ public class cuatro extends Fragment {
                 try {
                     JSONObject JSON = new JSONObject(response);
                     String rzona = JSON.getString("zona");
-
-                   /* if(rzona.equals("Chia")) idzona="1";
-                    if(rzona.equals("Nobsa")) idzona="2";
-                    if(rzona.equals("Puente aranda")) idzona="3";
-                    if(rzona.equals("Bello")) idzona="4";
-                    if(rzona.equals("Floridablanca")) idzona="5";
-                    if(rzona.equals("Palmira")) idzona="6";
-                    if(rzona.equals("Pipiral")) idzona="7";
-                    if(rzona.equals("Cartagena")) idzona="8";
-                    if(rzona.equals("Teleport")) idzona="9";
-                    if(rzona.equals("Buga")) idzona="10";
-                    if(rzona.equals("Ricaurte")) idzona="11";
-                    if(rzona.equals("Tunja")) idzona="12";*/
-
-                    if(rzona.equals("Bello")) idzona="1";
-                    if(rzona.equals("Buga")) idzona="2";
-                    if(rzona.equals("Cali Sur")) idzona="3";
-                    if(rzona.equals("Cemento")) idzona="4";
-                    if(rzona.equals("Chia")) idzona="5";
-                    if(rzona.equals("Floridablanca")) idzona="6";
-                    if(rzona.equals("Nobsa")) idzona="7";
-                    if(rzona.equals("Palmira")) idzona="8";
-                    if(rzona.equals("Puente Aranda")) idzona="9";
-                    if(rzona.equals("Ricaurte")) idzona="10";
-                    if(rzona.equals("Teleport")) idzona="11";
-                    if(rzona.equals("Tunja")) idzona="12";
-                    if(rzona.equals("Villavicencio")) idzona="13";
-
-
-                    enviar(idzona);
-
+                    enviar(rzona);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

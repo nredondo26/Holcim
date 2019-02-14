@@ -75,7 +75,6 @@ public class PerfilActivity extends AppCompatActivity {
         area = findViewById(R.id.tbriga);
         zona = findViewById(R.id.tplanta);
 
-
         emegerncias = findViewById(R.id.imageButton);
         bleve = findViewById(R.id.leve);
         bquimicos = findViewById(R.id.quimicas);
@@ -144,7 +143,7 @@ public class PerfilActivity extends AppCompatActivity {
         if(zona==4){return "Cemento"; }
         if(zona==5){return "Chia"; }
         if(zona==6){return "Floridablanca"; }
-        if(zona==7){return "Nobsa"; }
+        if(zona==7){return "Nobsa Cemento"; }
         if(zona==8){return "Palmira"; }
         if(zona==9){return "Puente Aranda"; }
         if(zona==10){return "Ricaurte"; }
@@ -213,9 +212,8 @@ public class PerfilActivity extends AppCompatActivity {
         Intent intent = new Intent(PerfilActivity.this, EditarActivity.class);
         intent.putExtra("id", rid);
         startActivity(intent);
+        finish();
     }
-
-
 
     public void cambiarimagen() {
         Intent intent = new Intent(PerfilActivity.this, Cambiar_imagen_Activity.class);
