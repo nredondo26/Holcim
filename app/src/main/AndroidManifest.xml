@@ -22,10 +22,14 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:replace="android:roundIcon">
+        <activity android:name=".proyect.Activities.ContenedoresActivity"></activity>
+        <activity android:name=".proyect.Activities.CarviewActivity" />
+        <activity android:name=".proyect.Activities.MainActivity" />
         <activity android:name=".proyect.Activities.Centros" />
         <activity
-            android:name=".proyect.Activities.MainActivity"
-            android:label="@string/app_name"
+            android:name=".proyect.Activities.PrincipalActivity"
+            android:label="Zonas"
+
             tools:ignore="InnerclassSeparator">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
